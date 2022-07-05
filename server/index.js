@@ -2,16 +2,13 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const UserModel = require('./models/Users')
-
+const dotenv = require('dotenv')
 app.use(express.json())
 
-// require('dotenv').config();
-// const {PORT, MONGODB_URI} = process.env;
-// const port = PORT || 4000
-const port = 3001;
+dotenv.config();
+const port = process.env.PORT || 4000
 
-// mongoose.connect(MONGODB_URI)
-mongoose.connect('mongodb+srv://mern:hbJfTH0SnFotEgsP@cluster0.naia9.mongodb.net/merndatabase?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGODB_URI, ()=>console.log("DB Connected"))
 
 app.get("/getUsers",(req,res)=>{
   UserModel.find({}, (err, result) => {
